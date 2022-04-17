@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  has_many :posts, dependent: :destroy
+
   validates :email, presence: true, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6, allow_nil: true }
 

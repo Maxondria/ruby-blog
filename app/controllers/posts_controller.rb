@@ -1,8 +1,9 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy]
+  before_action :ensure_current_user
 
   def index
-    @posts = Post.all
+    @posts = current_user.posts
   end
 
   def show; end
@@ -14,7 +15,7 @@ class PostsController < ApplicationController
   def edit; end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
 
     respond_to do |format|
       if @post.save
@@ -57,7 +58,7 @@ class PostsController < ApplicationController
   private
 
   def set_post
-    @post = Post.find(params[:id])
+    @post = current_user.posts.find(params.fetch(:id))
   end
 
   def post_params

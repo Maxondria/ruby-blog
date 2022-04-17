@@ -4,4 +4,11 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_user
+  helper_method :correct_user?
+
+  private
+
+  def ensure_current_user
+    redirect_to root_path, alert: 'You must be logged in!' unless current_user
+  end
 end

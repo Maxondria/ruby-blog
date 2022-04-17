@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   delete 'signout', to: 'sessions#destroy'
 
   resources :users, only: [:create]
-  resource :session, only: [:create]
+  resource :session, only: %i[new create destroy]
 end

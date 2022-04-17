@@ -11,6 +11,7 @@
   <body>
     <% if current_user %>
       Hi <%= current_user.email %>
+      <%= button_to "Sign out", signout_path, method: :delete,  data: { confirm: "Are you sure?" }  %>
     <% end %>
     <% if flash.any? %>
       <% flash.each do |key, message| %>
