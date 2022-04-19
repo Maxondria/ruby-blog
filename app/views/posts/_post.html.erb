@@ -7,4 +7,12 @@
     <strong>Description:</strong>
     <%= post.description %>
   </p>
+  <p>
+    <strong>Comments</strong>
+    <%= render post.comments.includes(:user).order(id: :desc)  %>
+    <%= render "comments/form", post: post %>
+  </p>
 </div>
+<p>
+  <%= link_to "Show this post", post %>
+</p>

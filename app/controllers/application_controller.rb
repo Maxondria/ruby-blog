@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_user
-  helper_method :correct_user?
 
   private
 

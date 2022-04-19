@@ -1,21 +1,23 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[show edit update destroy]
-  before_action :ensure_current_user
+  before_action :ensure_current_user, except: %i[index show]
+  before_action :set_post, only: %i[edit update destroy]
 
   def index
-    @posts = current_user.posts
+    @posts = Post.all
   end
 
-  def show; end
+  def show
+    @post = Post.find(params.fetch(:id))
+  end
 
   def new
-    @post = Post.new
+    @post = current_user.posts.build
   end
 
   def edit; end
 
   def create
-    @post = current_user.posts.new(post_params)
+    @post = current_user.posts.build(post_params)
 
     respond_to do |format|
       if @post.save
