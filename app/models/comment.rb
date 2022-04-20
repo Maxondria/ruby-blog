@@ -3,6 +3,7 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :parent, class_name: 'Comment', optional: true
   has_many :replies, class_name: 'Comment', foreign_key: :parent_id
+  has_many :likes, as: :likeable, dependent: :destroy
 
   scope :with_user, -> { includes(:user) }
   scope :by_most_recent, -> { with_user.order(id: :desc) }

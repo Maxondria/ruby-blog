@@ -7,14 +7,7 @@
     <strong>Description:</strong>
     <%= post.description %>
   </p>
-  <%= pluralize(post.likes.count, "Like") %>
-  <% if current_user %>
-    <% if current_user.likes.find_by(post: post).nil? %>
-      <%= button_to "Like", likes_path, params: { like: { post_id: post.id } }, method: :post %>
-    <% else %>
-      <%= button_to "Unlike", like_path(current_user.likes.find_by(post: post)), method: :delete %>
-    <% end %>
-  <% end %>
+  <%= render 'likes/button', likeable: post %>
   <p>
     <strong>Comments:</strong>
     <%= render post.comments.top_level  %>

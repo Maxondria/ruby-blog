@@ -5,6 +5,7 @@
   <div class="comment-reply">
     <%= render "comments/form", post: comment.post, parent: comment %>
   </div>
+  <%= render 'likes/button', likeable: comment %>
   <hr/>
   <div class="replies">
     <% unless comment.replies.empty? %>
