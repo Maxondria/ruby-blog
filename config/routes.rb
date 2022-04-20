@@ -10,4 +10,5 @@ Rails.application.routes.draw do
 
   resources :users, only: [:create]
   resource :session, only: %i[new create destroy]
+  resources :likes, only: %i[create destroy]
 end

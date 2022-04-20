@@ -1,5 +1,27 @@
 <article>
   <p><%= comment.content %></p>
   <small>by <%= comment.user.email %></small>
+  <a href="#" class="comment-reply-form-display">Reply</a>
+  <div class="comment-reply">
+    <%= render "comments/form", post: comment.post, parent: comment %>
+  </div>
+  <hr/>
+  <div class="replies">
+    <% unless comment.replies.empty? %>
+      <p>Replies</p>
+      <%= render comment.replies.by_most_recent %>
+    <% end %>
+  </div>
 </article>
-<hr/>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const commentReplyFormsLinks = document.querySelectorAll('.comment-reply-form-display');
+
+    commentReplyFormsLinks.forEach(function(commentReplyFormLink) {
+      commentReplyFormLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        commentReplyFormLink.nextElementSibling.style = 'display: block';
+      });
+    });
+  });
+</script>

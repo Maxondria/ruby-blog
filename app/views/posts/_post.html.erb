@@ -7,10 +7,18 @@
     <strong>Description:</strong>
     <%= post.description %>
   </p>
+  <%= pluralize(post.likes.count, "Like") %>
+  <% if current_user %>
+    <% if current_user.likes.find_by(post: post).nil? %>
+      <%= button_to "Like", likes_path, params: { like: { post_id: post.id } }, method: :post %>
+    <% else %>
+      <%= button_to "Unlike", like_path(current_user.likes.find_by(post: post)), method: :delete %>
+    <% end %>
+  <% end %>
   <p>
-    <strong>Comments</strong>
-    <%= render post.comments.includes(:user).order(id: :desc)  %>
-    <%= render "comments/form", post: post %>
+    <strong>Comments:</strong>
+    <%= render post.comments.top_level  %>
+    <%= render "comments/form", post: post, parent: nil %>
   </p>
 </div>
 <p>
