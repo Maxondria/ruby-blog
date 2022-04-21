@@ -5,6 +5,23 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.build(comment_params)
 
     if @comment.save
+      # Mail to the author of the post
+      post_author = @comment.post.user
+
+      unless post_author == @comment.user
+        CommentMailer.new_comment(post_author, @comment.post).deliver_now
+      end
+
+      unless @comment.parent.nil?
+        # Mail to the author of the parent comment
+        parent_comment_author = @comment.parent.user
+
+        unless parent_comment_author == @comment.user
+          CommentMailer.new_comment(parent_comment_author, @comment.post)
+            .deliver_now
+        end
+      end
+
       redirect_to @comment.post, notice: 'Comment was successfully created.'
     else
       flash.now[:notice] = @comment.errors.full_messages.to_sentence
